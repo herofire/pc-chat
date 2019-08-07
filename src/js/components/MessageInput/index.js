@@ -10,7 +10,7 @@ import Tribute from "tributejs";
 import TextMessageContent from '../../wfc/messages/textMessageContent';
 import ConversationType from '../../wfc/model/conversationType';
 import wfc from '../../wfc/wfc'
-import pinyin from 'han';
+import pinyin from '../../han';
 
 export default class MessageInput extends Component {
     static propTypes = {
@@ -42,9 +42,9 @@ export default class MessageInput extends Component {
         if (type === ConversationType.Group) {
             let groupInfo = wfc.getGroupInfo(conversation.target);
             let members = wfc.getGroupMembers(conversation.target);
-            mentionMenuItems.push({ key: "所有人", value: '@' + conversation.target, avatar: groupInfo.portrait, searchKey: '所有人' + pinyin.letter('所有人') });
+            mentionMenuItems.push({ key: "所有人", value: '@' + conversation.target, avatar: groupInfo.portrait, searchKey: '所有人' + pinyin.letter('所有人', '', null) });
             members.forEach(e => {
-                mentionMenuItems.push({ key: e.getName(), value: '@' + e.memberId, avatar: e.getPortrait(), searchKey: e.getName() + pinyin.letter(e.getName()) });
+                mentionMenuItems.push({ key: e.getName(), value: '@' + e.memberId, avatar: e.getPortrait(), searchKey: e.getName() + pinyin.letter(e.getName(), '', null) });
             });
         }
 
@@ -233,7 +233,7 @@ export default class MessageInput extends Component {
                     id="messageInput"
                     ref="input"
                     type="text"
-                    placeholder="Type something to send..."
+                    placeholder="输入内容发送 ..."
                     readOnly={!canisend}
                     onPaste={e => this.handlePaste(e)}
                     onKeyPress={e => this.handleEnter(e)}
